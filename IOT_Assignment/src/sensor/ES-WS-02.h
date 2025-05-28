@@ -1,4 +1,6 @@
-#include "global.h"
+#include <Arduino.h>
+#include "hal/modbus_uart.h"
+#include "CRC16.h"
 struct es_ws_02_data {
     int windSpeed; // Wind speed in m/s
 };

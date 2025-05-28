@@ -8,7 +8,7 @@
 #define MODBUS_UART_TX_PIN GPIO_NUM_17 // TX pin for Modbus UART
 #define MODBUS_UART_RX_PIN GPIO_NUM_16 // RX pin for Modbus UART
 
-#define MODBUS_UART_BAUDRATE 9600
+#define MODBUS_UART_BAUDRATE 9600 // default relay baudrate is 115200
 #define MODBUS_UART_TIMEOUT 1000 // Timeout in milliseconds
 
 /**
@@ -42,4 +42,13 @@ void modbus_uart_send(uint8_t *data, uint16_t length);
  */
 size_t modbus_uart_receive(uint8_t *data, uint16_t length);
 
+
+/**
+ * @brief Check if Modbus UART is started
+ *
+ * @return
+ *     - 1 if started
+ *     - 0 if not started
+ */
+uint8_t modbus_is_started(void);
 #endif

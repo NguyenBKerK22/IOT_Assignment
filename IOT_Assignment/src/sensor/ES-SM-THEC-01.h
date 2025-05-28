@@ -1,4 +1,6 @@
-#include "global.h"
+#include <Arduino.h>
+#include "hal/modbus_uart.h"
+#include "CRC16.h"
 struct es_sm_thec_01_data {
   float temperature_value; // Temperature in Celsius
   float humidity_value; // Humidity in percentage
