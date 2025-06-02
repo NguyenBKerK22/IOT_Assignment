@@ -4,20 +4,24 @@
 logger_connection_t initConnection(config_data_t device_config_data)
 {
     if(device_config_data.isWifi){
-        WiFi.begin(device_config_data.SSID, device_config_data.password);
+        // Serial.printf("SSID: %s | Password: %s\n", device_config_data.SSID, device_config_data.password);        
+        WiFi.begin(device_config_data.SSID.c_str(), device_config_data.password.c_str());        
 
         unsigned long startAttemptTime = millis();
 
         while (WiFi.status() != WL_CONNECTED && (millis() - startAttemptTime) < CONNECTION_TIMEOUT) {
             Serial.print(".");
-            delay(500);
+            vTaskDelay(500);
         }
 
         if(WiFi.status() == WL_CONNECTED) {
+            Serial.println("connected wifi");
+            vTaskDelay(500);
             WiFi.setAutoConnect(true);
             return connected_wifi;
         }
         else {
+            Serial.println("cant connect wifi");
             return timeout_wifi;
         }
     }
@@ -48,6 +52,7 @@ logger_connection_t initConnection(config_data_t device_config_data)
         init_sim();
 
         return connected_4G;
-
     }
+
+    return unknown_state;
 }

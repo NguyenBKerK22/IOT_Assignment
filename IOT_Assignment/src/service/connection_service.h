@@ -9,6 +9,7 @@
 #define CONNECTION_TIMEOUT 5000
 
 typedef enum {
+    unknown_state = -1,
     timeout_wifi = 0,
     timeout_4G = 1,
     connected_wifi = 2,
