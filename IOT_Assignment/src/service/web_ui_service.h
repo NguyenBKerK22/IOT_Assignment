@@ -6,22 +6,32 @@
 #include <WebServer.h>
 #include <ArduinoJson.h>
 
+typedef enum {
+  unknown = -1,
+  viettel = 0,
+  mobiphone = 1,
+  vinaphone = 2
+} isp_name_t;
+
+
 typedef struct config_data_t {
     String token = "";
     String SSID = "";
     String password = "";
     bool is4G = false;
     bool isWifi = false;
-    String carrier = "";           // "viettel", "mobiphone", "vinaphone"
+    isp_name_t carrier = unknown;           // "viettel", "mobiphone", "vinaphone"
     bool useAdvancedAPN = false;   // true if select "tùy chọn nâng cao"
     String apn = "";
     String apn_user = "";
     String apn_pass = "";
+    bool config_status = false;
 } config_data_t;
 
 
 extern config_data_t device_config_data;
 extern WebServer server;
+
 
 const char index_html[] PROGMEM = R"rawliteral(
 <!DOCTYPE html>

@@ -35,7 +35,17 @@ void handleSaveConfig()
             device_config_data.password = password;
             device_config_data.isWifi = isWifi;
             device_config_data.is4G = is4G;
-            device_config_data.carrier = carrier;
+
+            if(carrier == "viettel"){
+                device_config_data.carrier = viettel;    
+            }
+            else if(carrier == "mobiphone"){
+                device_config_data.carrier = mobiphone;    
+            }
+            else if(carrier == "vinaphone"){
+                device_config_data.carrier = vinaphone;    
+            }
+
             device_config_data.useAdvancedAPN = useAdvancedAPN;
             device_config_data.apn = apn;
             device_config_data.apn_user = apn_user;
@@ -64,7 +74,7 @@ void handleSaveConfig()
                     device_config_data.useAdvancedAPN = false;
                 }
             }
-
+            device_config_data.config_status = true;
             server.send(200, "application/json", "{\"status\":\"ok\"}");
         }
         else

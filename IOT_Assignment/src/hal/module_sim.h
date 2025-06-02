@@ -24,6 +24,9 @@
 #define USERNAME_MOBIPHONE  "mms"
 #define PASSWORD_MOBIPHONE  "mms"
 
+#define MODULE_SIM_RX       16
+#define MODULE_SIM_TX       17
+
 /**
  * @brief Get the TinyGsmClient instance for the SIM module. 
  *
