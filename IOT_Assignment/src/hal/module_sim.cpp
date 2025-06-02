@@ -15,8 +15,8 @@ void set_apn(const String &apn, const String &username = "", const String &passw
         PASSWORD = PASSWORD_VIETTEL;
     }else if(apn == "1"){
         APN = APN_MOBIFONE;
-        USERNAME = USERNAME_MOBILEPHONE;
-        PASSWORD = PASSWORD_MOBILEPHONE;
+        USERNAME = USERNAME_MOBIPHONE;
+        PASSWORD = PASSWORD_MOBIPHONE;
     }else if(apn == "2"){
         APN = APN_VINAPHONE;
         USERNAME = USERNAME_VINAPHONE;
@@ -58,4 +58,8 @@ void run_sim(){
         modemConnected = true;
         Serial.println(" OK");
     }
+};
+
+TinyGsmClient get_sim_client(){
+    return sim_client;
 };
