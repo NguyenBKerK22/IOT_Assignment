@@ -21,6 +21,12 @@ void handleSaveConfig()
             String method = jsonDoc["conn-method"] | "";
             String ssid = jsonDoc["ssid"] | "";
             String password = jsonDoc["password"] | "";
+            String carrier = jsonDoc["carrier"] | "";
+            String useAdvancedAPN = jsonDoc["useAdvanceAPN"] | "";
+            String apn = jsonDoc["apn"] | "";
+            String apn_user = jsonDoc["apn-user"] | "";
+            String apn_pass = jsonDoc["apn-pass"] | "";
+
             bool isWifi = method == "WiFi";
             bool is4G = method == "4G";
 
@@ -29,17 +35,35 @@ void handleSaveConfig()
             device_config_data.password = password;
             device_config_data.isWifi = isWifi;
             device_config_data.is4G = is4G;
-        
+            device_config_data.carrier = carrier;
+            device_config_data.useAdvancedAPN = useAdvancedAPN;
+            device_config_data.apn = apn;
+            device_config_data.apn_user = apn_user;
+            device_config_data.apn_pass = apn_pass;
+
             Serial.println("=== Received Config ===");
             Serial.println("Token: " + token);
             Serial.println("Method: " + method);
-            if(isWifi)
+            if (isWifi)
             {
                 Serial.println("SSID: " + ssid);
                 Serial.println("Password: " + password);
             }
-
-            // TODO: Lưu cấu hình vào SPIFFS hoặc LittleFS nếu cần
+            else if (is4G)
+            {
+                Serial.println("Carrier: " + carrier);                
+                Serial.println("Use Advanced APN: " + useAdvancedAPN);                            
+                
+                if((apn != "") && (apn_pass != "") && (apn_user != "")){
+                    device_config_data.useAdvancedAPN = true;
+                    Serial.println("APN: " + apn);
+                    Serial.println("APN User: " + apn_user);
+                    Serial.println("APN Pass: " + apn_pass);                                
+                }
+                else{
+                    device_config_data.useAdvancedAPN = false;
+                }
+            }
 
             server.send(200, "application/json", "{\"status\":\"ok\"}");
         }
@@ -60,14 +84,13 @@ String getUniqueSSID()
 void startServer()
 {
     WiFi.softAP(getUniqueSSID().c_str(), "12345678");
-      Serial.println("AP started. Connect to SSID: SmartFarm_Config");
+    Serial.println("AP started. Connect to SSID: SmartFarm_Config");
 
-  server.on("/", handleRoot);
-  server.on("/save-config", HTTP_POST, handleSaveConfig);
+    server.on("/", handleRoot);
+    server.on("/save-config", HTTP_POST, handleSaveConfig);
 
-  server.begin();
+    server.begin();
 }
-
 
 void stopServer()
 {
@@ -78,4 +101,3 @@ void webServerLoop()
 {
     server.handleClient();
 }
-

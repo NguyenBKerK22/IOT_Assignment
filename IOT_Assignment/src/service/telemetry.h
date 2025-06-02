@@ -1,6 +1,6 @@
 #ifndef TELEMETRY_H
 #define TELEMETRY_H
-#pragma one
+#pragma once
 
 #include <ArduinoJson.h>
 

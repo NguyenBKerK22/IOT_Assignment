@@ -1,6 +1,6 @@
 #ifndef RPC_HANDLER_SERVICE_H
 #define RPC_HANDLER_SERVICE_H
-#pragma one
+#pragma once
 
 #include <stdlib.h>
 #include <ArduinoJson.h>

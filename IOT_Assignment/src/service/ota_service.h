@@ -1,6 +1,6 @@
 #ifndef OTA_SERVICE_H
 #define OTA_SERVICE_H
-#pragma one 
+#pragma once 
 
 #include <stdlib.h>
 #include <Arduino.h>
