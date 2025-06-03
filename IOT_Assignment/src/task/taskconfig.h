@@ -9,3 +9,8 @@ extern TaskHandle_t modbushandleTask_handle;
 extern TaskHandle_t handlerResetTask_handle;
 extern TaskHandle_t configTask_handle;
 extern TaskHandle_t handlerResetTask_handle;
+
+extern TaskHandle_t xLightSensorTaskHandle;
+extern TaskHandle_t xWindSensorTaskHandle;
+extern TaskHandle_t xTempHumidSensorTaskHandle;
+extern TaskHandle_t xModbusHandlerTaskHandle;

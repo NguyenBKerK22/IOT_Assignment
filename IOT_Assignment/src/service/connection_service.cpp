@@ -50,6 +50,7 @@ logger_connection_t initConnection(config_data_t device_config_data)
             set_apn(device_config_data.apn, device_config_data.apn_user, device_config_data.apn_pass);
         }
         init_sim();
+        run_sim();
 
         return connected_4G;
     }

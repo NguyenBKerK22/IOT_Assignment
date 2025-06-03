@@ -1,4 +1,4 @@
-#include "crc16.h"
+
 #include <stdio.h>
 uint16_t crc16_lookup_table[256] = {
     0x0000, 0xc0c1, 0xc181, 0x0140, 0xc301, 0x03c0, 0x0280, 0xc241,

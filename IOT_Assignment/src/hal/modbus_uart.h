@@ -11,6 +11,7 @@
 #define MODBUS_UART_BAUDRATE 9600 // default relay baudrate is 115200
 #define MODBUS_UART_TIMEOUT 1000 // Timeout in milliseconds
 
+#define MAX_485_DE_RE_PIN GPIO_NUM_5 // RE pin for RS485 communication
 /**
  * @brief Initialize the UART for Modbus communication
  *

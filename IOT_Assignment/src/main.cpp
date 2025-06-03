@@ -1,6 +1,7 @@
 #include "global.h"
 #include "task/config_task.h"
 #include "task/server_task.h"
+#include "task/modbus_sensor.h"
 
 
 
@@ -14,8 +15,11 @@ void setup() {
   pinMode(FOGGER, OUTPUT);
   pinMode(AWNING, OUTPUT);
 
-  initServerTask();  
-  initConfigTask();
+  
+  initServerTask();
+  initConfigTask();  
+  initModbusTasks();
+
   
 }
 

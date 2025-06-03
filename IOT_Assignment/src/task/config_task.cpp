@@ -83,10 +83,17 @@ void configTask(void *pvParameters)
       {
         Serial.println("done config, stop server");
         stopServer();
+        WiFi.softAPdisconnect(true);
         saveConfigToFlash(device_config_data);
         Serial.println("saved config to flash");
 
         vTaskResume(serverTask_handle);
+
+        vTaskResume(xLightSensorTaskHandle);
+        vTaskResume(xWindSensorTaskHandle);
+        vTaskResume(xTempHumidSensorTaskHandle);
+        vTaskResume(xModbusHandlerTaskHandle);
+
         Serial.println("resume server task");
         vTaskDelay(pdMS_TO_TICKS(100));
         Serial.println("Suspending configTask");
