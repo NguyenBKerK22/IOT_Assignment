@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"name": "project_test",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.py": "python",
+			"array": "cpp",
+			"deque": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"utility": "cpp",
+			"*.tcc": "cpp",
+			"istream": "cpp",
+			"ostream": "cpp",
+			"cmath": "cpp"
+		}
+	}
+}

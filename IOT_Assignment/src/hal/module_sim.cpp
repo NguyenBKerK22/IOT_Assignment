@@ -8,25 +8,25 @@ HardwareSerial SerialAT(2); // Same with modbus. will be fail
 TinyGsm modem(SerialAT);
 TinyGsmClient sim_client(modem); // need to wrap with arduino mqtt client to construct thingsboard object
 
-void set_apn(const String &apn, const String &username = "", const String &password = ""){
-    if(apn == "0"){
-        APN = APN_VIETTEL;
-        USERNAME = USERNAME_VIETTEL;
-        PASSWORD = PASSWORD_VIETTEL;
-    }else if(apn == "1"){
-        APN = APN_MOBIFONE;
-        USERNAME = USERNAME_MOBIPHONE;
-        PASSWORD = PASSWORD_MOBIPHONE;
-    }else if(apn == "2"){
-        APN = APN_VINAPHONE;
-        USERNAME = USERNAME_VINAPHONE;
-        PASSWORD = PASSWORD_VINAPHONE;
-    }else{
-        APN = apn;
-        USERNAME = username;
-        PASSWORD = password;
-    }
-};
+// void set_apn(const String &apn, const String &username = "", const String &password = ""){
+//     if(apn == "0"){
+//         APN = APN_VIETTEL;
+//         USERNAME = USERNAME_VIETTEL;
+//         PASSWORD = PASSWORD_VIETTEL;
+//     }else if(apn == "1"){
+//         APN = APN_MOBIFONE;
+//         USERNAME = USERNAME_MOBIPHONE;
+//         PASSWORD = PASSWORD_MOBIPHONE;
+//     }else if(apn == "2"){
+//         APN = APN_VINAPHONE;
+//         USERNAME = USERNAME_VINAPHONE;
+//         PASSWORD = PASSWORD_VINAPHONE;
+//     }else{
+//         APN = apn;
+//         USERNAME = username;
+//         PASSWORD = password;
+//     }
+// };
 
 void init_sim(){
     SerialAT.begin(115200, SERIAL_8N1, 16, 17);

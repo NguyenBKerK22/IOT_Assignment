@@ -1,18 +1,14 @@
 #include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
-
+#include "sensor/SD123-ST01V3.h"
+#include "sensor/ES-WS-02.h"
+#include "sensor/ES-ALS-01.h"
+#include "hal/modbus_queue.h"
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+ // Initialize serial communication at 115200 baud rate
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 }
 
 // put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}
