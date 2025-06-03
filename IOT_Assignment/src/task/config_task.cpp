@@ -1,8 +1,8 @@
 
 #include "config_task.h"
 
-TaskHandle_t configTask_handle;
-TaskHandle_t handlerResetTask_handle;
+TaskHandle_t configTask_handle = NULL;
+TaskHandle_t handlerResetTask_handle = NULL;
 Preferences preferences;
 
 void saveConfigToFlash(const config_data_t &config)
@@ -47,7 +47,8 @@ bool loadConfigFromFlash(config_data_t &config)
   return device_config_data.config_status;
 }
 
-void clearConfigFromFlash() {
+void clearConfigFromFlash(void)
+{
   preferences.begin("device-config", false);
   preferences.clear();
   preferences.end();
@@ -55,16 +56,22 @@ void clearConfigFromFlash() {
 
 void configTask(void *pvParameters)
 {
-  if(loadConfigFromFlash(device_config_data))
+  if (loadConfigFromFlash(device_config_data))
   {
-    if (initConnection(device_config_data) == (connected_4G | connected_wifi))
+    logger_connection_t status = initConnection(device_config_data);
+    if ((status == connected_4G) || (status == connected_wifi))
     {
       Serial.println("Load config successful, start connection");
     }
-    vTaskSuspend(NULL);
+    vTaskResume(serverTask_handle);
+    Serial.println("resume serverTask");
+    vTaskDelay(pdMS_TO_TICKS(100));
+    Serial.println("Suspending configTask");
+    vTaskDelete(NULL);
   }
-
-  startServer();
+  else{
+    startServer();
+  }
 
   while (true)
   {
@@ -77,25 +84,38 @@ void configTask(void *pvParameters)
         Serial.println("done config, stop server");
         stopServer();
         saveConfigToFlash(device_config_data);
-        vTaskSuspend(NULL);
+        Serial.println("saved config to flash");
+
+        vTaskResume(serverTask_handle);
+        Serial.println("resume server task");
+        vTaskDelay(pdMS_TO_TICKS(100));
+        Serial.println("Suspending configTask");
+        vTaskDelete(NULL);  // An toàn hơn
       }
     }
+
+    vTaskDelay(pdMS_TO_TICKS(10));  // Đừng để while(true) chạy liên tục gây stack tràn
   }
 }
 
-void handlerResetTask(void* pvParameters)
+void handlerResetTask(void *pvParameters)
 {
 
-  while(true){
-    if(1)
+  while (true)
+  {
+    if (get_button_state())
     {
-      clearConfiguration();
+      Serial.println("ESP32 Clear Configuration and Restart");
+      clearConfigFromFlash();
       ESP.restart();
     }
+    deboucing_run();
+    vTaskDelay(10);
   }
 }
 
 void initConfigTask(void)
 {
-  xTaskCreate(configTask, "configTask", 1024 * 5, NULL, 1, &configTask_handle);
+  xTaskCreate(configTask, "configTask", 1024 * 5, NULL, 2, &configTask_handle);
+  xTaskCreate(handlerResetTask, "handleResetTask", 1024 * 3, NULL, 1, &handlerResetTask_handle);
 }

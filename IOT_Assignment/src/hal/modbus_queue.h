@@ -7,7 +7,7 @@
 
 #define MODBUS_QUEUE_LENGTH 10
 
-xQueueHandle xModbusQueue;
+extern xQueueHandle xModbusQueue;
 
 typedef struct {
     uint8_t data;

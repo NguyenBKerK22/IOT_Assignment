@@ -6,11 +6,10 @@
 
 extern DynamicJsonDocument data_document;
 
-constexpr char KEY_SOIL_MOISTURE[] = "SoilMoisture";
-constexpr char KEY_SOIL_TEMPERATURE[] = "SoilTemperature";
+constexpr char KEY_HUMIDITY[] = "Humidity";
+constexpr char KEY_TEMPERATURE[] = "Temperature";
 constexpr char KEY_WINDSPEAD[] = "WindSpeed";
-constexpr char KEY_SOIL_PH[] = "SoilpH";
-constexpr char KEY_SOIL_EC[] = "SoilEC";
+constexpr char KEY_LIGHT_AMBIENT[] = "AmbientLight";
 
 
 

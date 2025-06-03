@@ -1,5 +1,7 @@
 #include "modbus_queue.h"
 
+xQueueHandle xModbusQueue;
+
 void initModbusQueue(void)
 {
     xModbusQueue = xQueueCreate(MODBUS_QUEUE_LENGTH, sizeof(ModbusRequest_t));
