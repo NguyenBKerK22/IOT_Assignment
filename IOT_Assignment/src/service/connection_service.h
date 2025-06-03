@@ -2,8 +2,9 @@
 #define CONNECTION_SERVICE_H
 #pragma once
 
+
+#include "global.h"
 #include "hal/module_sim.h"
-#include <WiFi.h>
 #include "web_ui_service.h"
 
 #define CONNECTION_TIMEOUT 5000

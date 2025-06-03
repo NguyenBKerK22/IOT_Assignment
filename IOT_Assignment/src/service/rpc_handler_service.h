@@ -2,15 +2,19 @@
 #define RPC_HANDLER_SERVICE_H
 #pragma once
 
-#include <stdlib.h>
-#include <ArduinoJson.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "global.h"
+#include "thingsboard.h"
 
-constexpr const char RPC_SET_RELAY_METHOD[] = "setRelaytStatus";
-constexpr const char RPC_GET_RELAY_METHOD[] = "getRelayStatus";
-constexpr uint8_t MAX_RPC_SUBSCRIPTIONS = 2U;
-constexpr uint8_t MAX_RPC_RESPONSE = 2U;
 
 void processGetRelayState(const JsonVariantConst &data, JsonDocument &response);
 void processSetRelayState(const JsonVariantConst &data, JsonDocument &response);
+void processSchedulerMorning(const JsonVariantConst &data, JsonDocument &response);
+void processSchedulerAfternoon(const JsonVariantConst &data, JsonDocument &response);
+
+/*one-shot task*/
+
+void pumpTask(void* pvParameters);
 
 #endif // RPC_HANDLER_SERVICE_H

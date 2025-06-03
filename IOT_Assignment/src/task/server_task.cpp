@@ -2,8 +2,8 @@
 
 TaskHandle_t serverTask_handle = NULL;
 
-ThingsBoard *tb = nullptr;
-Arduino_MQTT_Client *mqttClient = nullptr;
+// Statuses for subscribing to rpc
+bool subscribed = false;
 
 void serverTask(void *pvParameters)
 {
@@ -27,8 +27,8 @@ void serverTask(void *pvParameters)
 
     if (device_config_data.is4G)
     {
-        TinyGsmClient *client4G = new TinyGsmClient(get_sim_client());
-        mqttClient = new Arduino_MQTT_Client(*client4G);
+        TinyGsmClient client4G = get_sim_client();
+        mqttClient = new Arduino_MQTT_Client(client4G);
     }
     else if (device_config_data.isWifi)
     {
@@ -47,7 +47,7 @@ void serverTask(void *pvParameters)
         Serial.println("MQTT client is connected.");
     }
 
-    tb = new ThingsBoard(*mqttClient, MAX_MESSAGE_RECEIVE_SIZE, MAX_MESSAGE_SEND_SIZE, Default_Max_Stack_Size);
+    tb = new ThingsBoard(*mqttClient, MAX_MESSAGE_RECEIVE_SIZE, MAX_MESSAGE_SEND_SIZE, Default_Max_Stack_Size, apis);
 
     while (true)
     {
@@ -60,11 +60,7 @@ void serverTask(void *pvParameters)
 
         if (tb && !tb->connected())
         {
-            Serial.println("THINGSBOARD_SERVER: " + String(THINGSBOARD_SERVER));
-            Serial.println("THINGSBOARD_PORT: " + String(THINGSBOARD_PORT));
-            Serial.println("TOKEN: " + device_config_data.token);
-            const char token[] = "NodeMCU-T1";
-            if (tb->connect(THINGSBOARD_SERVER, token, THINGSBOARD_PORT))
+            if (tb->connect(THINGSBOARD_SERVER, device_config_data.token.c_str(), THINGSBOARD_PORT))
             {
                 Serial.println("Connected to Server");
             }
@@ -74,6 +70,26 @@ void serverTask(void *pvParameters)
                 vTaskDelay(pdMS_TO_TICKS(5000));
                 continue;
             }
+        }
+
+        if (!subscribed)
+        {
+            Serial.println("Subscribing for RPC...");
+            const std::array<RPC_Callback, MAX_RPC_SUBSCRIPTIONS> callbacks = {
+                // Internal size can be 0, because if we use the JsonDocument as a JsonVariant and then set the value we do not require additional memory
+                RPC_Callback{SCHEDULER_TURNON_MORNING_METHOD, processSchedulerMorning},
+                RPC_Callback{SCHEDULER_TURNON_AFTERNOON_METHOD, processSchedulerAfternoon},
+                RPC_Callback{RPC_SET_RELAY_METHOD, processSetRelayState},
+                RPC_Callback{RPC_GET_RELAY_METHOD, processGetRelayState}};
+
+            if (!rpc.RPC_Subscribe(callbacks.cbegin(), callbacks.cend()))
+            {
+                Serial.println("Failed to subscribe for RPC");
+                return;
+            }
+
+            Serial.println("Subscribe done");
+            subscribed = true;
         }
 
         if (tb)

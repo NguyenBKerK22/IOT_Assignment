@@ -2,8 +2,7 @@
 #define OTA_SERVICE_H
 #pragma once 
 
-#include <stdlib.h>
-#include <Arduino.h>
+#include "global.h"
 
 
 void update_starting_callback();

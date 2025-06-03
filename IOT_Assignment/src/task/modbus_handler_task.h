@@ -2,6 +2,7 @@
 #define MODBUS_HANDLER_TASK_H
 #pragma once 
 
+
 #include "hal/modbus_queue.h"
 #include "taskconfig.h"
 

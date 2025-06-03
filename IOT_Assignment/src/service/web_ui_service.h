@@ -2,9 +2,7 @@
 #define WEB_UI_SERVICE_H
 #pragma once
 
-#include <WiFi.h>
-#include <WebServer.h>
-#include <ArduinoJson.h>
+#include "global.h"
 
 typedef enum {
   unknown = -1,
