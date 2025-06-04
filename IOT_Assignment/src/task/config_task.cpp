@@ -89,10 +89,7 @@ void configTask(void *pvParameters)
 
         vTaskResume(serverTask_handle);
 
-        vTaskResume(xLightSensorTaskHandle);
-        vTaskResume(xWindSensorTaskHandle);
-        vTaskResume(xTempHumidSensorTaskHandle);
-        vTaskResume(xModbusHandlerTaskHandle);
+        
 
         Serial.println("resume server task");
         vTaskDelay(pdMS_TO_TICKS(100));

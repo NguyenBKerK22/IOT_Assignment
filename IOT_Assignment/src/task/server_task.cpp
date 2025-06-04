@@ -49,6 +49,7 @@ void serverTask(void *pvParameters)
 
     tb = new ThingsBoard(*mqttClient, MAX_MESSAGE_RECEIVE_SIZE, MAX_MESSAGE_SEND_SIZE, Default_Max_Stack_Size, apis);
 
+    bool first_time = true;
     while (true)
     {
         if (device_config_data.isWifi && WiFi.status() != WL_CONNECTED)
@@ -62,6 +63,14 @@ void serverTask(void *pvParameters)
         {
             if (tb->connect(THINGSBOARD_SERVER, device_config_data.token.c_str(), THINGSBOARD_PORT))
             {
+                if (first_time)
+                {
+                    first_time = false;
+                    vTaskResume(xLightSensorTaskHandle);
+                    vTaskResume(xWindSensorTaskHandle);
+                    vTaskResume(xTempHumidSensorTaskHandle);
+                    vTaskResume(xModbusHandlerTaskHandle);
+                }
                 Serial.println("Connected to Server");
             }
             else
