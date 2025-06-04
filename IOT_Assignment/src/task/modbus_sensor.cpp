@@ -77,8 +77,7 @@ void modbus_handler_task(void *pvParameters)
             // Here you can add your Modbus processing logic
             // For example, send the request to the Modbus slave and wait for a response
             // After processing, you can notify the task that sent the request
-
-            vTaskResume(request.task_handle); // Resume the task that sent the request
+           xTaskNotifyGive(request.task_handle);        
         }
     }
 }
