@@ -1,11 +1,9 @@
 #include <Arduino.h>
-#include "sensor/SD123-ST01V3.h"
-#include "sensor/ES-WS-02.h"
-#include "sensor/ES-ALS-01.h"
-#include "hal/modbus_queue.h"
+#include "task/modbus_sensor.h"
 void setup() {
   // put your setup code here, to run once:
  // Initialize serial communication at 115200 baud rate
+ initModbusTasks();
 }
 
 void loop() {
