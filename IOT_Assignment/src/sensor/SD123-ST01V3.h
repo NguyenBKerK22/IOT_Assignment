@@ -42,7 +42,6 @@ struct sd123_st01v3 {
         uint8_t id, func, byte_num, crc;
         uint8_t sensor_data[4]; // Array to hold the temperature and humidity data
         parseData(buffer, &id, &func, &byte_num, sensor_data, &crc); // Parse the received data
-
         if(id == slave_address && func == 0x03 && byte_num == 4) { // Check if the response is valid
         // Combine high and low bytes to get temperature and humidity
             data.temperature_value = ((sensor_data[3] << 8) | sensor_data[4]) / 10.0; // Convert to Celsius

@@ -1,13 +1,22 @@
-#include <Arduino.h>
+#include "global.h"
+#include "task/config_task.h"
+#include "task/server_task.h"
 #include "task/modbus_sensor.h"
-void setup() {
-  // put your setup code here, to run once:
- // Initialize serial communication at 115200 baud rate
- initModbusTasks();
+
+void setup() {  
+  Serial.begin(9600);  
+  pinMode(PUMP, OUTPUT);
+  pinMode(FOGGER, OUTPUT);
+  pinMode(AWNING, OUTPUT);
+
+  
+  initServerTask();
+  initConfigTask();  
+  initModbusTasks();
+
+  
 }
 
-void loop() {
-    
+void loop() {  
+  
 }
-
-// put function definitions here:

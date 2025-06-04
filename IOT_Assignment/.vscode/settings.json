@@ -1,5 +1,10 @@
 {
     "files.associations": {
+<<<<<<< HEAD
         "*.tpp": "cpp"
+=======
+        "*.tpp": "cpp",
+        "string": "cpp"
+>>>>>>> d00616c3f2661c721f0fd61828706f736db97655
     }
 }

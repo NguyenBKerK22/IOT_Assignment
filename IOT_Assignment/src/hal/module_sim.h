@@ -24,13 +24,16 @@
 #define USERNAME_MOBIPHONE  "mms"
 #define PASSWORD_MOBIPHONE  "mms"
 
+#define MODULE_SIM_RX       GPIO_NUM_9
+#define MODULE_SIM_TX       GPIO_NUM_10
+
 /**
  * @brief Get the TinyGsmClient instance for the SIM module. 
  *
  * @return
  *     - TinyGsmClient instance
  */
-TinyGsmClient get_sim_client();
+TinyGsmClient* get_sim_client();
 
 /**
  * @brief Set the APN, username, and password for the SIM module.
