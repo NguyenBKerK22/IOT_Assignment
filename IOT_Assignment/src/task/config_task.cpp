@@ -118,6 +118,6 @@ void handlerResetTask(void *pvParameters)
 
 void initConfigTask(void)
 {
-  xTaskCreate(configTask, "configTask", 1024 * 5, NULL, 2, &configTask_handle);
+  xTaskCreate(configTask, "configTask", 1024 * 5, NULL, 1, &configTask_handle);
   xTaskCreate(handlerResetTask, "handleResetTask", 1024 * 3, NULL, 1, &handlerResetTask_handle);
 }

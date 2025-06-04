@@ -32,6 +32,7 @@ size_t modbus_uart_receive(uint8_t *data, uint16_t length){
             bytesRead = modbusSerial.readBytes(data, length);
             break;
         }
+        vTaskDelay(pdMS_TO_TICKS(1)); // Nhường CPU
     }
 
     return bytesRead; // Trả về số byte thực sự đã đọc (có thể < length nếu timeout)

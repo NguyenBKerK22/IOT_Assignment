@@ -8,7 +8,6 @@ void setup() {
   pinMode(PUMP, OUTPUT);
   pinMode(FOGGER, OUTPUT);
   pinMode(AWNING, OUTPUT);
-
   
   initServerTask();
   initConfigTask();  
@@ -18,5 +17,4 @@ void setup() {
 }
 
 void loop() {  
-  
 }

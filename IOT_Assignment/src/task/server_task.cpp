@@ -1,7 +1,6 @@
 #include "server_task.h"
 
 TaskHandle_t serverTask_handle = NULL;
-TinyGsmClient* client4G = nullptr;  // pointer toàn cục
 
 // Statuses for subscribing to rpc
 bool subscribed = false;
@@ -111,6 +110,6 @@ void serverTask(void *pvParameters)
 
 void initServerTask(void)
 {
-    xTaskCreate(serverTask, "configTask", 1024 * 5, NULL, 2, &serverTask_handle);
+    xTaskCreate(serverTask, "configTask", 1024 * 5, NULL, 1, &serverTask_handle);
     vTaskSuspend(serverTask_handle);
 }

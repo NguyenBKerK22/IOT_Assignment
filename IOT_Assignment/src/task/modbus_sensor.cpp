@@ -15,13 +15,15 @@ void light_sensor_task(void *pvParameters)
     {
         light_sensor.readSensor();
         // vTaskSuspend(NULL); // Suspend the task until the data is received
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        light_sensor.processReceivedData(light_sensor.rx_buffer); // Process the received data
-        int lux = light_sensor.getlight();
-        Serial.print("Light: ");
-        Serial.println(lux);
+        if (!ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(2000)) == 0)
+        {
+            light_sensor.processReceivedData(light_sensor.rx_buffer); // Process the received data
+            int lux = light_sensor.getlight();
+            Serial.print("Light: ");
+            Serial.println(lux);
 
-        tb->sendTelemetryData(KEY_LIGHT_AMBIENT, lux);
+            tb->sendTelemetryData(KEY_LIGHT_AMBIENT, lux);
+        }
         vTaskDelay(pdMS_TO_TICKS(3000));
     }
 }
@@ -31,14 +33,15 @@ void wind_sensor_task(void *pvParameters)
     {
         wind_sensor.readSensor();
         // vTaskSuspend(NULL); // Suspend the task until the data is received
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+        if (!ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(2000)) == 0){
         // Process the received data
-        wind_sensor.processReceivedData(wind_sensor.rx_buffer); // Process the received data
-        int wind = wind_sensor.getWindSpeed();
-        Serial.print("Wind: ");
-        Serial.println(wind);
+            wind_sensor.processReceivedData(wind_sensor.rx_buffer); // Process the received data
+            int wind = wind_sensor.getWindSpeed();
+            Serial.print("Wind: ");
+            Serial.println(wind);
 
-        tb->sendTelemetryData(KEY_WINDSPEAD, wind);
+            tb->sendTelemetryData(KEY_WINDSPEAD, wind);
+        }
         vTaskDelay(pdMS_TO_TICKS(6000));
     }
 }
@@ -48,18 +51,20 @@ void temp_humid_sensor_task(void *pvParameters)
     {
         temp_humid_sensor.readSensor();
         // vTaskSuspend(NULL); // Suspend the task until the data is received
-        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-        temp_humid_sensor.processReceivedData(temp_humid_sensor.rx_buffer); // Process the received data
-        float temperature = temp_humid_sensor.getTemperature();             // Get the temperature value
-        float humidity = temp_humid_sensor.getHumidity();                   // Get the humidity value
-        Serial.print("Temperature: ");
-        Serial.print(temperature);
-        Serial.print(" °C, Humidity: ");
-        Serial.print(humidity);
-        Serial.println(" %");
+        if(!ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(2000)) == 0)
+        {
+            temp_humid_sensor.processReceivedData(temp_humid_sensor.rx_buffer); // Process the received data
+            float temperature = temp_humid_sensor.getTemperature();             // Get the temperature value
+            float humidity = temp_humid_sensor.getHumidity();                   // Get the humidity value
+            Serial.print("Temperature: ");
+            Serial.print(temperature);
+            Serial.print(" °C, Humidity: ");
+            Serial.print(humidity);
+            Serial.println(" %");
 
-        tb->sendTelemetryData(KEY_HUMIDITY, humidity);
-        tb->sendTelemetryData(KEY_TEMPERATURE, temperature);
+            tb->sendTelemetryData(KEY_HUMIDITY, humidity);
+            tb->sendTelemetryData(KEY_TEMPERATURE, temperature);
+        }
 
         vTaskDelay(pdMS_TO_TICKS(3000));
     }
