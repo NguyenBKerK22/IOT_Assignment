@@ -70,10 +70,10 @@ void initModbusTasks() {
     initModbusQueue(); // Initialize the Modbus queue
     modbus_uart_init(); // Initialize the Modbus UART communication
     xTaskCreate(wind_sensor_task, "Wind Sensor Task", 5120, NULL, 1, &xWindSensorTaskHandle); // Create a task for reading wind sensor data
-    xTaskCreate(light_sensor_task, "Light Sensor Task", 5120, NULL, 2, &xLightSensorTaskHandle); // Create a task for reading wind sensor data
-    xTaskCreate(temp_humid_sensor_task, "Temperature Handler Task", 5120, NULL, 3, &xTempHumidSensorTaskHandle); // Create a task for handling Modbus requests
+    xTaskCreate(light_sensor_task, "Light Sensor Task", 5120, NULL, 1, &xLightSensorTaskHandle); // Create a task for reading wind sensor data
+    xTaskCreate(temp_humid_sensor_task, "Temperature Handler Task", 5120, NULL, 1, &xTempHumidSensorTaskHandle); // Create a task for handling Modbus requests
     xTaskCreate(modbus_handler_task, "Modbus Handler Task", 5120, NULL, 4, &xModbusHandlerTaskHandle); // Create a task for handling Modbus requests
-    vTaskSuspend(xWindSensorTaskHandle); // Suspend the wind sensor task until data is received
-    vTaskSuspend(xLightSensorTaskHandle); // Suspend the light sensor task until data is received
-    vTaskSuspend(xTempHumidSensorTaskHandle); // Suspend the temperature and humidity sensor task until data is received
+    // vTaskSuspend(xWindSensorTaskHandle); // Suspend the wind sensor task until data is received
+    // vTaskSuspend(xLightSensorTaskHandle); // Suspend the light sensor task until data is received
+    // vTaskSuspend(xTempHumidSensorTaskHandle); // Suspend the temperature and humidity sensor task until data is received
 }
