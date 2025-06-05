@@ -3,7 +3,7 @@
 #include "CRC16.h"
 #include "hal/modbus_queue.h"
 #include "utils.h"
-#include "crc/crc.h"
+#include "hal/crc.h"
 struct es_ws_02_data {
     uint16_t windSpeed; // Wind speed in m/s
 };
