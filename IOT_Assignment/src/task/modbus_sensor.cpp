@@ -24,7 +24,7 @@ void light_sensor_task(void *pvParameters)
 
             tb->sendTelemetryData(KEY_LIGHT_AMBIENT, lux);
         }
-        vTaskDelay(pdMS_TO_TICKS(3000));
+        vTaskDelay(pdMS_TO_TICKS(2000));
     }
 }
 void wind_sensor_task(void *pvParameters)
@@ -42,7 +42,7 @@ void wind_sensor_task(void *pvParameters)
 
             tb->sendTelemetryData(KEY_WINDSPEAD, wind);
         }
-        vTaskDelay(pdMS_TO_TICKS(6000));
+        vTaskDelay(pdMS_TO_TICKS(4000));
     }
 }
 void temp_humid_sensor_task(void *pvParameters)
@@ -66,7 +66,7 @@ void temp_humid_sensor_task(void *pvParameters)
             tb->sendTelemetryData(KEY_TEMPERATURE, temperature);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(3000));
+        vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 void modbus_handler_task(void *pvParameters)

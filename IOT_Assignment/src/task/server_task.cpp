@@ -103,13 +103,13 @@ void serverTask(void *pvParameters)
 
         if (tb)
             tb->loop();
-
+        
         vTaskDelay(pdMS_TO_TICKS(5000));
     }
 }
 
 void initServerTask(void)
 {
-    xTaskCreate(serverTask, "configTask", 1024 * 5, NULL, 1, &serverTask_handle);
+    xTaskCreate(serverTask, "configTask", 1024 * 5, NULL, 2, &serverTask_handle);
     vTaskSuspend(serverTask_handle);
 }
